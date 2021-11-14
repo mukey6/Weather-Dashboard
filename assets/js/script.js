@@ -1,31 +1,46 @@
-// db1f99f6eab83a5a788a8790446e3ea2
+// var apiKey = db1f99f6eab83a5a788a8790446e3ea2
 // var currentCity = $("#current-city")
-var searchBtn = document.getElementById("search-btn")
+var searchBtn = document.getElementById("search-btn");
+var city = $("#search-input").val();
+var weatherData 
 
-var getCity = function(city){
+var getCity = function (event) {
+  event.preventDefault();
+  var city = $("#search-input").val();
+  var apiUrl =
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
+    city +
+    "&appid=db1f99f6eab83a5a788a8790446e3ea2";
+  fetch(apiUrl)
+    .then(function (response) {
+      if (response.ok) {
+        return response.json();
+      }
+    })
+    .then(function (data) {
+        
+    });
+};
 
-    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=db1f99f6eab83a5a788a8790446e3ea2"
-console.log(apiUrl)
-fetch(apiUrl)
-.then(function(response){
-    console.log(response)
-    if(response.ok){
-        return response.json()
-    }
-})
-.then(function(data){
-    console.log(data)
-})
+function getCurrentWeather(){
+
+ var currentDay = $("<span>").text(moment().format("l"))
+ $("#current-condition").append(currentDay)
+
+//  var currentTemp
+//  var currentWind
+//  var currentHumidity
+//  var currentUv
 }
+// function forecast(){
+//     var weatherCard = $("div")
+//     var temp
 
-function getCurrentWeather (){
-     
-}
 
-searchBtn.addEventListener("click", function(){
-    event.preventDefault();
-    var cityName = $("#search-input").val()
-    console.log(cityName)
-})
+//     $("#forecast").append(weatherCard)
+// }
 
-getCity("manchester")
+searchBtn.addEventListener("click", getCity);
+
+getCurrentWeather()
+// forecast()

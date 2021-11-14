@@ -15,26 +15,35 @@
 </header>
 <main class="container">
     <div class="row">
-        <section class="col-3" style="border: solid 1px; height: 300px;">
-            <div id="seach-city">
-                <label>Search By City</label>
-                 <form class="form-control mr-2">
-                     <input type="text" id="search-input" value="">
-                    <button class="" id="search-btn">Search</button>
-                </form>
-             </div>
+        <!--search section-->
+        <section class="col-3">
+            
+                <div id="seach-city">
+                    <label>Search By City</label>
+                     <form class="form-control mr-2">
+                         <input type="text" id="search-input" value="">
+                        <button class="" id="search-btn">Search</button>
+                    </form>
+                 </div>
+                <div>
+                    <ul class="" id="list-searched-cities"> </ul>
+                </div>
+            
         </section>
-   <!--Weather display-->
-        <section class="col-9" style="border: solid 1px; height: 600px;">
-            <div id="current-condition" style="border: solid 1px; height: 250px; margin: 2%" >
-   
+            <!--Weather display-->
+        <section class="col-8 ">
+            <!--current weather-->
+            <div class="row h-100" id="current-weather"> 
+
             </div>
-            <div id="forecast" style="border: solid 1px; height: 250px; margin: 2%">
-   
+            <!-- day forecast-->
+            <div class="row h-100" id="5-day-forecast">
+
             </div>
         </section>
         
     </div>
+    <!--displays the saved cities and forecast on the right -->
 </main>
 
 
