@@ -18,7 +18,8 @@ var getCity = function (event) {
       }
     })
     .then(function (data) {
-        
+        weatherData = data
+      console.log(weatherData);
     });
 };
 
