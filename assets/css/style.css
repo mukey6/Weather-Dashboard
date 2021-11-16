@@ -13,3 +13,11 @@ h1 {
 /* .hidden {
     display: none; 
   } */
+
+  .card{
+    margin: inherit;
+    display: inline-grid;
+    height: auto;
+    width: 14%;
+    background-color: antiquewhite;
+  }
