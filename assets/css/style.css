@@ -20,8 +20,9 @@ h1 {
     height: auto;
     width: 14%;
     background-color: #0077b6;
+    color: white;
   }
-  #forecast{
+  .forecastContainer{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
   }

@@ -23,14 +23,17 @@ var getCity = function (event) {
     .then(function (data) {
       currentForecast(data);
       fiveDayforecast(data);
-      savedInput(data)
-
     });
 };
 
 function currentForecast(data) {
   console.log(data);
   currentDayDisplay.innerText = data.name + " " + moment().format("l");
+
+  let icons = document.createElement("span")
+  // icon.textContent = data.weather[0].icon
+  console.log(("this is " + icons))
+
   let temp = document.createElement("p");
   temp.textContent = data.main.temp + " F";
   currentCondition.append(temp);
@@ -48,13 +51,26 @@ function currentForecast(data) {
   //  currentUv.textContent = data
 
   //local storage
-  localStorage.setItem('city', data.name)
-  console.log("temp for the city of  " + data.name)
+  let citySearch = localStorage.getItem('city')
+// localStorage.setItem('city', JSON.stringify(data.name))
+
+  let cities;
+  if ( citySearch === null){
+    cities=[];
+    localStorage.setItem('city', JSON.stringify(data.name))
+  }
+  else{
+  JSON.parse(localStorage.setItem('city', data.name))
+  }
+  cities.push(data.name)
+  searchedCity.textContent;
 
 }
 function fiveDayforecast(data) {
   let lon = data.coord.lon;
   let lat = data.coord.lat;
+  let forecastContainer = document.createElement("div")
+  forecastContainer.classList.add("forecastContainer")
   var futureApi = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude={daily}&appid=` + apiKey;
   fetch(futureApi)
     .then(function (response) {
@@ -66,7 +82,7 @@ function fiveDayforecast(data) {
       let forecastData = data.daily;
       for (let i = 1; i < 6; i++) {
         let dayDisplay = document.createElement("h4")
-        dayDisplay.textContent = moment().add(1, 'day').format("l")
+        dayDisplay.textContent = moment().add([i], 'day').format("l")
         console.log(dayDisplay)
 
         let futureTemp = document.createElement("span");
@@ -83,28 +99,28 @@ function fiveDayforecast(data) {
         futureHumidity.textContent = forecastData[i].humidity + "% ";
         futureHumidity.classList.add("card-text")
 
-        forecast.appendChild(boxCard);
-     
+        forecast.appendChild(forecastContainer);
+        forecastContainer.appendChild(boxCard);
+
 
         boxCard.appendChild(dayDisplay);
         boxCard.appendChild(futureTemp);
         boxCard.appendChild(futureHumidity);
         boxCard.appendChild(futureWing);
 
-
       }
       console.log("=====>", data);
     });
-
-  //    let futureDate = moment.format("l")
 }
-function savedInput(data){
-  searchedCity.textContent = 
 
-  savedCity = localStorage.getItem('city', data.name)
 
-  console.log("city you saved is " + savedCity)
+
+function clearSearch (){
+let clear = document.createElement("button")
+clear.textContent = "Clear"
+searchedCity.appendChild(clear)
 }
 searchBtn.addEventListener("click", getCity);
 
 
+clearSearch()
