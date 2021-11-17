@@ -6,6 +6,8 @@ var currentCondition = document.getElementById("current-condition");
 var currentDayDisplay = document.getElementById("city-date");
 var forecast = document.getElementById("forecast");
 var searchedCity = document.getElementById("saved-city")
+// citySearch.push()
+
 
 var getCity = function (event) {
   event.preventDefault();
@@ -32,7 +34,7 @@ function currentForecast(data) {
 
   let icons = document.createElement("span")
   // icon.textContent = data.weather[0].icon
-  console.log(("this is " + icons))
+  // console.log(("this is " + icons))
 
   let temp = document.createElement("p");
   temp.textContent = data.main.temp + " F";
@@ -49,21 +51,19 @@ function currentForecast(data) {
   // can't find UV on the data
   //  let currentUv = document.createComment("p")
   //  currentUv.textContent = data
+// 
 
   //local storage
-  let citySearch = localStorage.getItem('city')
-// localStorage.setItem('city', JSON.stringify(data.name))
+  let cities =localStorage.getItem('city') || [];
 
-  let cities;
-  if ( citySearch === null){
-    cities=[];
-    localStorage.setItem('city', JSON.stringify(data.name))
-  }
-  else{
-  JSON.parse(localStorage.setItem('city', data.name))
-  }
+if (localStorage.getItem('city') === null){
+  localStorage.setItem('city', JSON.stringify(data.name))
   cities.push(data.name)
-  searchedCity.textContent;
+
+}else{
+localStorage.setItem('city', JSON.stringify(data.name))
+localStorage.getItem('city')
+}
 
 }
 function fiveDayforecast(data) {
@@ -83,7 +83,7 @@ function fiveDayforecast(data) {
       for (let i = 1; i < 6; i++) {
         let dayDisplay = document.createElement("h4")
         dayDisplay.textContent = moment().add([i], 'day').format("l")
-        console.log(dayDisplay)
+        // console.log(dayDisplay)
 
         let futureTemp = document.createElement("span");
         futureTemp.textContent = forecastData[i].temp.day + "F ";
