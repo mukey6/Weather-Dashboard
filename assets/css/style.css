@@ -19,5 +19,9 @@ h1 {
     display: inline-grid;
     height: auto;
     width: 14%;
-    background-color: antiquewhite;
+    background-color: #0077b6;
+  }
+  #forecast{
+    display: flex;
+    justify-content: space-between;
   }
