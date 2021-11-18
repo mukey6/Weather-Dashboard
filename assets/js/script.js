@@ -15,8 +15,9 @@ var getCity = function (event) {
   var apiUrl =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     city +
-    "&appid=" + apiKey;
-  fetch(apiUrl)
+    "&appid=" + apiKey + "&unit=imperial";
+    console.log(apiKey)
+    fetch(apiUrl)
     .then(function (response) {
       if (response.ok) {
         return response.json();
@@ -27,7 +28,6 @@ var getCity = function (event) {
       fiveDayforecast(data);
     });
 };
-
 function currentForecast(data) {
   console.log(data);
   currentDayDisplay.innerText = data.name + " " + moment().format("l");
@@ -54,16 +54,15 @@ function currentForecast(data) {
 // 
 
   //local storage
-  let cities =localStorage.getItem('city') || [];
 
 if (localStorage.getItem('city') === null){
-  localStorage.setItem('city', JSON.stringify(data.name))
-  cities.push(data.name)
-
+  localStorage.setItem('city', JSON.stringify([data.name]))
 }else{
-localStorage.setItem('city', JSON.stringify(data.name))
-localStorage.getItem('city')
+var citySearched = JSON.parse(localStorage.getItem('city'))
+citySearched.push(data.name)
+localStorage.setItem('city', JSON.stringify(citySearched))
 }
+searchedCity.innerText=citySearched
 
 }
 function fiveDayforecast(data) {
