@@ -10,9 +10,9 @@ h1 {
   font-size: 20px;
 }
 
-/* .hidden {
+.hidden {
     display: none; 
-  } */
+  }
 
   .card{
     margin: inherit;
@@ -25,4 +25,12 @@ h1 {
   .forecastContainer{
     display: flex;
     justify-content: space-around;
+  }
+  #saved-city{
+    display: grid;
+  }
+
+  #current-condition{
+border: solid 1px; 
+height: 200px; 
   }
