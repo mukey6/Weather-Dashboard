@@ -18,9 +18,10 @@ h1 {
     margin: inherit;
     display: inline-grid;
     height: auto;
-    width: 14%;
+    width: 16%;
     background-color: #0077b6;
     color: white;
+    font-size: small;
   }
   .forecastContainer{
     display: flex;

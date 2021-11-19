@@ -1,4 +1,4 @@
-var apiKey = "db1f99f6eab83a5a788a8790446e3ea2"
+var apiKey = "0fb48fb704090281a9b83e51e7d0084b"
 // var currentCity = $("#current-city")
 var searchBtn = document.getElementById("search-btn");
 var city = $("#search-input").val();
@@ -14,6 +14,7 @@ function handleSearchButton(event){
   var city = $("#search-input").val();
   if(city){
     getForecast(city)
+    
   }else{
     alert("please enter a city")
   }
@@ -31,9 +32,10 @@ function getForecast(city){
       }
     })
     .then(function (data) {
+      console.log(data)
       currentForecast(data);
       fiveDayforecast(data);
-      displayCitySearch ();
+      displayCitySearch (city);
 
     });
 
@@ -43,26 +45,30 @@ function getForecast(city){
 
 function currentForecast(data) {
   currentCondition.innerText=""
-  
-let todayIn = document.createElement("h5")
-todayIn.innerText=data.name + " " + moment().format("l");
-currentCondition.appendChild(todayIn)
-console.log(todayIn)
-  let icons = document.createElement("span")
-  // icon.textContent = data.weather[0].icon
-  // console.log(("this is " + icons))
+  let weatherIcon = "http://openweathermap.org/img/wn/" + data.weather[0].icon+ ".png"
 
+  console.log(weatherIcon)
+
+let todayIn = document.createElement("h5")
+todayIn.innerHTML=data.name + " " + moment().format("l") + " " + ("<img src='" + weatherIcon  + "'>");
+currentCondition.appendChild(todayIn)
+  
   let temp = document.createElement("p");
-  temp.textContent = data.main.temp + " F";
+  temp.textContent ="Temp: " + data.main.temp + "\xB0 F";
   currentCondition.append(temp);
 
   let currentWind = document.createElement("p");
-  currentWind.textContent = data.wind.speed + " MPH";
+  currentWind.textContent ="Wind: " + data.wind.speed + " MPH";
   currentCondition.append(currentWind);
 
   let currentHumidity = document.createElement("p");
-  currentHumidity.textContent = data.main.humidity + " %";
+  currentHumidity.textContent ="Humidity: " + data.main.humidity + " %";
   currentCondition.append(currentHumidity);
+
+  let currentUvIndex = document.createElement("p");
+  currentUvIndex.textContent ="UV Index: " + data.main.humidity + " %";
+  currentCondition.append(currentUvIndex);
+
 
   //local storage
 
@@ -89,23 +95,26 @@ function fiveDayforecast(data) {
       }
     })
     .then(function (data) {
+      console.log("data2", data)
       let forecastData = data.daily;
+      forecastContainer.innerText=""
       for (let i = 1; i < 6; i++) {
+          let weatherIcon = "http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png"
         let dayDisplay = document.createElement("h4")
-        dayDisplay.textContent = moment().add(i, 'days').format('l')
+        dayDisplay.innerHTML = moment().add(i, 'days').format('l') + ("<img src='" + weatherIcon  + "'>")
 
         let futureTemp = document.createElement("span");
-        futureTemp.textContent = forecastData[i].temp.day + "F ";
+        futureTemp.textContent = "Temp: " + forecastData[i].temp.day + " \xB0 F";
         futureTemp.classList.add("card-text")
         let boxCard = document.createElement("div");
         boxCard.classList.add("card");
 
-        let futureWing = document.createElement("span");
-        futureWing.textContent = forecastData[i].wind_speed + "MPH ";
-          futureWing.classList.add("card-text")
+        let futureWind = document.createElement("span");
+        futureWind.textContent ="Wind: " + forecastData[i].wind_speed + " MPH ";
+          futureWind.classList.add("card-text")
 
         let futureHumidity = document.createElement("span");
-        futureHumidity.textContent = forecastData[i].humidity + "% ";
+        futureHumidity.textContent ="Humidity " + forecastData[i].humidity + " % ";
         futureHumidity.classList.add("card-text")
 
         forecast.appendChild(forecastContainer);
@@ -115,10 +124,9 @@ function fiveDayforecast(data) {
         boxCard.appendChild(dayDisplay);
         boxCard.appendChild(futureTemp);
         boxCard.appendChild(futureHumidity);
-        boxCard.appendChild(futureWing);
+        boxCard.appendChild(futureWind);
 
       }
-      console.log("=====>", data);
     });
 }
 
@@ -133,6 +141,7 @@ if(getCity){
     searchedCityContainer.appendChild(cityList)
     cityList.innerHTML = getCity[i]
   }
+
 }
 
 
