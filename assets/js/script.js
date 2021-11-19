@@ -49,7 +49,7 @@ function currentForecast(data) {
 
   console.log(weatherIcon)
 
-let todayIn = document.createElement("h5")
+let todayIn = document.createElement("h3")
 todayIn.innerHTML=data.name + " " + moment().format("l") + " " + ("<img src='" + weatherIcon  + "'>");
 currentCondition.appendChild(todayIn)
   
@@ -83,6 +83,7 @@ localStorage.setItem('city', JSON.stringify(citySearched))
 
 }
 function fiveDayforecast(data) {
+  
   let lon = data.coord.lon;
   let lat = data.coord.lat;
   let forecastContainer = document.createElement("div")
@@ -97,8 +98,8 @@ function fiveDayforecast(data) {
     .then(function (data) {
       console.log("data2", data)
       let forecastData = data.daily;
-      forecastContainer.innerText=""
       for (let i = 1; i < 6; i++) {
+
           let weatherIcon = "http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png"
         let dayDisplay = document.createElement("h4")
         dayDisplay.innerHTML = moment().add(i, 'days').format('l') + ("<img src='" + weatherIcon  + "'>")

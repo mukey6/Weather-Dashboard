@@ -25,7 +25,7 @@ h1 {
   }
   .forecastContainer{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
   }
   #saved-city{
     display: grid;
