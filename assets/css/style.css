@@ -35,3 +35,7 @@ h1 {
 border: solid 1px; 
 height: 200px; 
   }
+
+  .cityButton{
+    margin-bottom: 1rem!important;
+  }

@@ -85,9 +85,15 @@ function fiveDayforecast(data) {
     })
     .then(function (data) {
       let currentUvIndex = document.createElement("p");
-      currentUvIndex.textContent ="UV Index: " + data.current.uvi + " ";
+      // // let uvResult=document.createElement("span")
+      let uvResult= data.current.uvi
+      // uvResult.style.color="green"
+      // console.log(uvResult)
+      currentUvIndex.textContent ="UV Index: " + uvResult;
       currentCondition.append(currentUvIndex);
-      currentUvIndex.style.backgroundColor="green"
+      // currentUvIndex.appendChild(uvResult)
+
+      // uvResult.style.backgroundColor="green"
 // need help woth color coding 
 // if (currentUvIndex < 2){
 
@@ -148,6 +154,7 @@ let getCity = JSON.parse(localStorage.getItem('city'))
 if(getCity){
   for (let i = 0; i < getCity.length; i++) {
     let cityList = document.createElement("button")
+    cityList.setAttribute("class", "cityButton")
     searchedCityContainer.appendChild(cityList)
     cityList.innerHTML = getCity[i]
   }
