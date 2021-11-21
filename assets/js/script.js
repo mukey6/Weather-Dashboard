@@ -35,13 +35,15 @@ function getForecast(city){
       console.log(data)
       currentForecast(data);
       fiveDayforecast(data);
+      if("" === $("#search-input").val()){
+        return 
+      }else{
+        SavingCitiesStorage(city)
+      }
       displayCitySearch (city);
-
     });
 
 }
-
-
 
 function currentForecast(data) {
   currentCondition.innerText=""
@@ -65,30 +67,16 @@ currentCondition.appendChild(todayIn)
   currentHumidity.textContent ="Humidity: " + data.main.humidity + " %";
   currentCondition.append(currentHumidity);
 
-  let currentUvIndex = document.createElement("p");
-  currentUvIndex.textContent ="UV Index: " + data.main.humidity + " %";
-  currentCondition.append(currentUvIndex);
+  
 
-
-  //local storage
-
-if (localStorage.getItem('city') === null){
-  localStorage.setItem('city', JSON.stringify([data.name]))
-}
-else{
-var citySearched = JSON.parse(localStorage.getItem('city'))
-citySearched.push(data.name)
-localStorage.setItem('city', JSON.stringify(citySearched))
-}
 
 }
 function fiveDayforecast(data) {
   
   let lon = data.coord.lon;
   let lat = data.coord.lat;
-  let forecastContainer = document.createElement("div")
-  forecastContainer.classList.add("forecastContainer")
   var futureApi = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude={hourly,minutely}&units=imperial&appid=` + apiKey;
+ console.log(futureApi)
   fetch(futureApi)
     .then(function (response) {
       if (response.ok) {
@@ -96,10 +84,20 @@ function fiveDayforecast(data) {
       }
     })
     .then(function (data) {
-      console.log("data2", data)
-      let forecastData = data.daily;
-      for (let i = 1; i < 6; i++) {
+      let currentUvIndex = document.createElement("p");
+      currentUvIndex.textContent ="UV Index: " + data.current.uvi + " ";
+      currentCondition.append(currentUvIndex);
+      currentUvIndex.style.backgroundColor="green"
+// need help woth color coding 
+// if (currentUvIndex < 2){
 
+// }
+      let forecastContainer = document.createElement("div")
+      forecastContainer.classList.add("forecastContainer")    
+      let forecastData = data.daily;
+
+      forecast.innerHTML="<h4>5 Day forecast:</h4>"
+      for (let i = 1; i < 6; i++) {
           let weatherIcon = "http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png"
         let dayDisplay = document.createElement("h4")
         dayDisplay.innerHTML = moment().add(i, 'days').format('l') + ("<img src='" + weatherIcon  + "'>")
@@ -131,6 +129,17 @@ function fiveDayforecast(data) {
     });
 }
 
+function SavingCitiesStorage(city){
+
+  if (localStorage.getItem('city') === null){
+    localStorage.setItem('city', JSON.stringify([city]))
+  }
+  else{
+  var citySearched = JSON.parse(localStorage.getItem('city'))
+  citySearched.push(city)
+  localStorage.setItem('city', JSON.stringify(citySearched))
+  }
+}
 
 
 function displayCitySearch (city){
@@ -142,13 +151,9 @@ if(getCity){
     searchedCityContainer.appendChild(cityList)
     cityList.innerHTML = getCity[i]
   }
-
+}
 }
 
-
-}
 getForecast(citySearched[citySearched.length-1])
 displayCitySearch ()
 searchBtn.addEventListener("click", handleSearchButton);
-
-
