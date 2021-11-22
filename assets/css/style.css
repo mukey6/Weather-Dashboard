@@ -10,6 +10,7 @@ h1 {
   font-size: 20px;
 }
 
+
 .hidden {
     display: none; 
   }
@@ -34,8 +35,12 @@ h1 {
   #current-condition{
 border: solid 1px; 
 height: 200px; 
+padding: inherit;
   }
 
   .cityButton{
     margin-bottom: 1rem!important;
+  }
+  .normal{
+    background-color: lime;
   }

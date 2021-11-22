@@ -53,6 +53,7 @@ function currentForecast(data) {
 
 let todayIn = document.createElement("h3")
 todayIn.innerHTML=data.name + " " + moment().format("l") + " " + ("<img src='" + weatherIcon  + "'>");
+todayIn.setAttribute("class", "fs-3 fw-bolder")
 currentCondition.appendChild(todayIn)
   
   let temp = document.createElement("p");
@@ -85,19 +86,15 @@ function fiveDayforecast(data) {
     })
     .then(function (data) {
       let currentUvIndex = document.createElement("p");
-      // // let uvResult=document.createElement("span")
-      let uvResult= data.current.uvi
-      // uvResult.style.color="green"
-      // console.log(uvResult)
-      currentUvIndex.textContent ="UV Index: " + uvResult;
+      currentUvIndex.textContent ="UV Index: ";
+      uvResult=document.createElement("span")
+      uvResult.textContent= data.current.uvi
+      console.log(uvResult + ">>>>>")
+      currentUvIndex.appendChild(uvResult)
       currentCondition.append(currentUvIndex);
-      // currentUvIndex.appendChild(uvResult)
+      uvResult.style.backgroundColor="lime"
+      
 
-      // uvResult.style.backgroundColor="green"
-// need help woth color coding 
-// if (currentUvIndex < 2){
-
-// }
       let forecastContainer = document.createElement("div")
       forecastContainer.classList.add("forecastContainer")    
       let forecastData = data.daily;
@@ -155,12 +152,18 @@ let getCity = JSON.parse(localStorage.getItem('city'))
 if(getCity){
   for (let i = 0; i < getCity.length; i++) {
     let cityList = document.createElement("button")
-    cityList.addEventListener("click", handleSearchButton)
+    // cityList.addEventListener("click", getForecast)
+
     cityList.setAttribute("class", "cityButton")
     searchedCityContainer.appendChild(cityList)
     cityList.innerHTML = getCity[i]
+    cityList.onclick=cityClick
   }
 }
+}
+
+let cityClick = function(){
+  getForecast(this.textContent)
 }
 
 getForecast(citySearched[citySearched.length-1])
