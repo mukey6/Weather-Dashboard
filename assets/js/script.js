@@ -32,7 +32,6 @@ function getForecast(city){
       }
     })
     .then(function (data) {
-      console.log(data)
       currentForecast(data);
       fiveDayforecast(data);
       if("" === $("#search-input").val()){
@@ -42,15 +41,11 @@ function getForecast(city){
       }
       displayCitySearch (city);
     });
-
 }
 
 function currentForecast(data) {
   currentCondition.innerText=""
   let weatherIcon = "http://openweathermap.org/img/wn/" + data.weather[0].icon+ ".png"
-
-  console.log(weatherIcon)
-
 let todayIn = document.createElement("h3")
 todayIn.innerHTML=data.name + " " + moment().format("l") + " " + ("<img src='" + weatherIcon  + "'>");
 todayIn.setAttribute("class", "fs-3 fw-bolder")
@@ -67,17 +62,12 @@ currentCondition.appendChild(todayIn)
   let currentHumidity = document.createElement("p");
   currentHumidity.textContent ="Humidity: " + data.main.humidity + " %";
   currentCondition.append(currentHumidity);
-
-  
-
-
 }
+
 function fiveDayforecast(data) {
-  
   let lon = data.coord.lon;
   let lat = data.coord.lat;
   var futureApi = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude={hourly,minutely}&units=imperial&appid=` + apiKey;
- console.log(futureApi)
   fetch(futureApi)
     .then(function (response) {
       if (response.ok) {
@@ -89,12 +79,10 @@ function fiveDayforecast(data) {
       currentUvIndex.textContent ="UV Index: ";
       uvResult=document.createElement("span")
       uvResult.textContent= data.current.uvi
-      console.log(uvResult + ">>>>>")
       currentUvIndex.appendChild(uvResult)
       currentCondition.append(currentUvIndex);
       uvResult.style.backgroundColor="lime"
       
-
       let forecastContainer = document.createElement("div")
       forecastContainer.classList.add("forecastContainer")    
       let forecastData = data.daily;
@@ -144,9 +132,7 @@ function SavingCitiesStorage(city){
   }
 }
 
-
 function displayCitySearch (city){
-
   searchedCityContainer.innerHTML=""
 let getCity = JSON.parse(localStorage.getItem('city'))
 if(getCity){
