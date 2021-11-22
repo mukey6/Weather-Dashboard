@@ -152,11 +152,10 @@ function displayCitySearch (city){
 
   searchedCityContainer.innerHTML=""
 let getCity = JSON.parse(localStorage.getItem('city'))
-document.addEventListener("click", getCity, handleSearchButton)
-
 if(getCity){
   for (let i = 0; i < getCity.length; i++) {
     let cityList = document.createElement("button")
+    cityList.addEventListener("click", handleSearchButton)
     cityList.setAttribute("class", "cityButton")
     searchedCityContainer.appendChild(cityList)
     cityList.innerHTML = getCity[i]
